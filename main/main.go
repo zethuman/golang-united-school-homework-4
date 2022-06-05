@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println(StringSum(" - 12c0 - 100"))
+	fmt.Println(StringSum("120 + 100 + 11"))
 }
 
 //use these errors as appropriate, wrapping them with fmt.Errorf function
@@ -35,9 +35,16 @@ func StringSum(input string) (output string, err error) {
 		return "", fmt.Errorf("an error occured: not enough parameters %w", errorEmptyInput)
 	}
 
+	if clear[0] != '-' {
+		clear = "+" + clear
+	}
+
 	var count, fst, snd int
 	runes := []rune(clear)
-	for i := 0; i < len(clear); i++ {
+
+	fmt.Println(string(runes))
+
+	for i := 0; i < len(runes); i++ {
 		if runes[i] == '-' || runes[i] == '+' {
 			count++
 			fst = snd
@@ -51,12 +58,12 @@ func StringSum(input string) (output string, err error) {
 
 	parsed1, err := strconv.Atoi(clear[fst:snd])
 	if err != nil {
-		return "", fmt.Errorf("an error occured: parse error %w", err)
+		return "", err
 	}
 
 	parsed2, err := strconv.Atoi(clear[snd:])
 	if err != nil {
-		return "", fmt.Errorf("an error occured: parse error %w", err)
+		return "", err
 	}
 
 	return fmt.Sprint(parsed1 + parsed2), nil
