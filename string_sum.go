@@ -32,18 +32,17 @@ func StringSum(input string) (output string, err error) {
 		return "", fmt.Errorf("an error occured: not enough parameters %w", errorEmptyInput)
 	}
 
-	format, _ := regexp.MatchString("^(([-]\\d+|\\d+)(([+]|[-])\\d+))$", clear)
+	format, _ := regexp.MatchString(`^([-]?\w+)([-]?|[+]?\w+)$`, clear)
 	if !format {
 		return "", fmt.Errorf("an error occured: invalid input %w", errorNotTwoOperands)
 	}
 
-	re := regexp.MustCompile("^[-]?\\d+|([-]|[+])\\d+")
-	var sum int64
+	re := regexp.MustCompile(`^[-]?\w+|([-]|[+])\w+`)
+	var sum int
 
 	submatchall := re.FindAllString(clear, -1)
 	for _, element := range submatchall {
-		fmt.Println(element)
-		parsed, err := strconv.ParseInt(element, 10, 64)
+		parsed, err := strconv.Atoi(element)
 		if err != nil {
 			return "", fmt.Errorf("an error occured: parse error %w", err)
 		}
