@@ -1,4 +1,4 @@
-package string_sum
+package main
 
 import (
 	"errors"
@@ -6,6 +6,10 @@ import (
 	"strconv"
 	"strings"
 )
+
+func main() {
+	fmt.Println(StringSum(" - 12c0 - 100"))
+}
 
 //use these errors as appropriate, wrapping them with fmt.Errorf function
 var (
