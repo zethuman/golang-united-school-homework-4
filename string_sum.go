@@ -2,6 +2,10 @@ package string_sum
 
 import (
 	"errors"
+	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
 )
 
 //use these errors as appropriate, wrapping them with fmt.Errorf function
@@ -23,5 +27,28 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
-	return "", nil
+	clear := strings.ReplaceAll(input, " ", "")
+	if len(clear) == 0 {
+		return "", fmt.Errorf("an error occured: not enough parameters %w", errorEmptyInput)
+	}
+
+	format, _ := regexp.MatchString("^(([-]\\d+|\\d+)(([+]|[-])\\d+))$", clear)
+	if !format {
+		return "", fmt.Errorf("an error occured: invalid input %w", errorNotTwoOperands)
+	}
+
+	re := regexp.MustCompile("^[-]?\\d+|([-]|[+])\\d+")
+	var sum int64
+
+	submatchall := re.FindAllString(clear, -1)
+	for _, element := range submatchall {
+		fmt.Println(element)
+		parsed, err := strconv.ParseInt(element, 10, 64)
+		if err != nil {
+			return "", fmt.Errorf("an error occured: parse error %w", err)
+		}
+		sum += parsed
+	}
+
+	return fmt.Sprint(sum), nil
 }
