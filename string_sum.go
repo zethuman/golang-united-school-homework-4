@@ -31,7 +31,7 @@ func StringSum(input string) (output string, err error) {
 		return "", fmt.Errorf("an error occured: not enough parameters %w", errorEmptyInput)
 	}
 
-	if clear[0] != '-' {
+	if clear[0] != '-' && clear[0] != '+' {
 		clear = "+" + clear
 	}
 
